@@ -1,0 +1,60 @@
+#!name=Phúc Anh IT 
+#!desc= Bypass Youtuber Ads Locket Gold
+# Bản quyền bỏi Phúc Anh IT
+# Mua bản quyền zl: 0585657009
+# Facebook: fb.com/phucanhit
+# Website: https://phucanhdev.site/
+# mong các bạn không xoá tên ạ
+[General]
+private-ip-answer = true
+include = 
+bypass-system = true
+skip-proxy = 192.168.0.0/16, 10.0.0.0/8, 172.16.0.0/12, localhost, *.local, captive.apple.com
+tun-excluded-routes = 10.0.0.0/8, 100.64.0.0/10, 127.0.0.0/8, 169.254.0.0/16, 172.16.0.0/12, 192.0.0.0/24, 192.0.2.0/24, 192.88.99.0/24, 192.168.0.0/16, 198.51.100.0/24, 203.0.113.0/24, 224.0.0.0/4, 255.255.255.255/32, 239.255.255.250/32
+dns-server = 
+fallback-dns-server = 8.8.8.8,9.9.9.11
+ipv6 = false
+prefer-ipv6 = false
+update-url = https://raw.githubusercontent.com/bigdargon/hostsVN/master/option/hostsVN-shadowrocket.conf
+
+[Rule]
+RULE-SET,https://raw.githubusercontent.com/bigdargon/hostsVN/master/option/hostsVN-surge-exceptions-rule.conf,DIRECT
+RULE-SET,https://raw.githubusercontent.com/bigdargon/hostsVN/master/option/hostsVN-surge-rule.conf,REJECT
+RULE-SET,https://raw.githubusercontent.com/bigdargon/hostsVN/master/option/hostsVN-surge-rewrite.conf,REJECT
+RULE-SET,https://raw.githubusercontent.com/bigdargon/hostsVN/master/extensions/threat/surge-rule.conf,REJECT
+IP-CIDR,0.0.0.0/32,REJECT,no-resolve
+AND,((DOMAIN-SUFFIX,googlevideo.com), (PROTOCOL,UDP)),REJECT-NO-DROP
+FINAL,DIRECT
+
+[URL Rewrite]
+(^https?:\/\/.+\.googlevideo\.com\/.+)(&ctier=[A-Z])(&.+) $1$3 302
+^https?:\/\/[\w-]+\.googlevideo\.com\/initplayback.+&oad _ REJECT-IMG
+https?:\/\/.+\.googlevideo\.com\/.+&oad reject header
+https?:\/\/.+\.googlevideo\.com\/ptracking\?pltype=adhost reject header
+https?:\/\/.+\.youtube\.com\/api\/stats\/.+adformat reject header
+https?:\/\/.+\.youtube\.com\/api\/stats\/ads reject header
+https?:\/\/.+\.youtube\.com\/get_midroll reject header
+https?:\/\/.+\.youtube\.com\/pagead\/ reject header
+https?:\/\/.+\.youtube\.com\/ptracking\? reject header
+https?:\/\/m\.youtube\.com\/_get_ads reject header
+https?:\/\/pagead2\.googlesyndication\.com\/pagead\/ reject header
+https?:\/\/s\.youtube\.com\/api\/stats\/watchtime?adformat reject header
+https?:\/\/youtubei\.googleapis\.com/.+ad_break reject header
+
+[Script]
+deleteHeader = type=http-response,script-path=https://raw.githubusercontent.com/DungHoang120401/Nobita/CSA_Module/LKG_delete_header.js,pattern=^https:\/\/api\.revenuecat\.com\/.+\/(receipts|subscribers),max-size=131072,timeout=10,script-update-interval=0,enable=true
+revenuecat = type=http-response,script-path=https://raw.githubusercontent.com/DungHoang120401/Nobita/CSA_Module/Locket_Gold.js,pattern=^https:\/\/api\.revenuecat\.com\/.+\/(receipts$|subscribers\/[^/]+$),max-size=131072,requires-body=true,timeout=10,script-update-interval=0,enable=true
+youtube.request = type=http-request,pattern=^https:\/\/youtubei\.googleapis\.com\/youtubei\/v1\/(browse|next|player|reel\/reel_watch_sequence),requires-body=1,max-size=-1,binary-body-mode=1,script-path=https://raw.githubusercontent.com/Maasea/sgmodule/master/Script/Youtube/dist/youtube.request.beta.js
+youtube.response = type=http-response,pattern=^https:\/\/youtubei\.googleapis\.com\/youtubei\/v1\/(browse|next|player|search|reel\/reel_watch_sequence|guide|account\/get_setting),requires-body=1,max-size=-1,binary-body-mode=1,script-path=https://raw.githubusercontent.com/Maasea/sgmodule/master/Script/Youtube/dist/youtube.response.beta.js
+Fafaria = type=http-response,script-path=https://gist.githubusercontent.com/chankanzu/d8ad1a8dbab75daa035ffa87300c207c/raw/farfaria.js,pattern=^https:\/\/api\.farfaria\.com\/users\/sign_in.json?,max-size=131072,requires-body=true,timeout=10,enable=true
+spotify = type=http-response,script-path=https://raw.githubusercontent.com/app2smile/rules/master/js/spotify-proto.js,pattern=^https:\/\/spclient\.wg\.spotify\.com\/(bootstrap\/v1\/bootstrap|user-customization-service\/v1\/customize)$,max-size=131072,requires-body=true,timeout=10,enable=true
+youtube = type=http-response,script-path=https://raw.githubusercontent.com/Maasea/sgmodule/master/Script/Youtube/youtube.js,pattern=^https:\/\/youtubei\.googleapis\.com\/youtubei\/v1\/(browse|next|player|search|reel\/reel_watch_sequence|guide|account\/get_setting)\?,max-size=131072,requires-body=true,binary-mode=true,timeout=10,script-update-interval=0,enable=true
+quizlet = type=http-response,script-path=https://gist.githubusercontent.com/chankanzu/8fed133c0d39add4da3f9587979b12a6/raw/quizlet.js,pattern=^https:\/\/api\.quizlet\.com\/.+\/user,max-size=131072,requires-body=true,timeout=10,enable=true
+YOUTUBE2 = type=http-response,script-path=https://raw.fastgit.org/Maasea/sgmodule/master/Script/Youtube/tinygif.gif,pattern=^https?:\/\/[\w-]+\.googlevideo\.com\/initplayback.+&oad,max-size=131072,requires-body=true,timeout=10,enable=true
+Busuu = type=http-response,script-path=https://gist.githubusercontent.com/chankanzu/966ede287fd62e0c0696afb37c26a908/raw/busuu.js,pattern=^https:\/\/api\.busuu\.com\/users\/me,max-size=131072,requires-body=true,timeout=10,enable=true
+elsa = type=http-response,script-path=https://gist.githubusercontent.com/chankanzu/807f3981a70cf2a0ecacac888b0f6791/raw/elsa-response.js,pattern=^https:\/\/pool\.elsanow\.io\/user\/api\/.+\/purchase$,max-size=131072,requires-body=true,timeout=10,enable=true
+Elsa-header = type=http-request,pattern=^https:\/\/pool\.elsanow\.io\/content\/api\/.+\/modules\/download$,script-path=https://gist.githubusercontent.com/chankanzu/2efe6f3fb3441c9d681337c0583987a1/raw/elsa-header.js,script-update-interval=-1
+
+[MITM]
+hostname = *.googlevideo.com,s.youtube.com,www.youtube.com,www.googleapis.com,youtubei.googleapis.com,*.youtube.com,%APPEND%api.revenuecat.com, avatar-nct.nixcdn.com, api-prod.languagedrops.com, restore-access.indream.app,spclient.wg.spotify.com, api.chinese.littlefox.com, oa.zalo.me, vsco.co, api.gyrosco.pe, origin-prod-phoenix.jibjab.com, api.termius.com, api.picsart.com, api.unfold.app, viva-asia1.vvbrd.com, graph.nhaccuatui.com, api.memrise.com , buy.itunes.apple.com, api.sync.me, pool.elsanow.io, lambda.us-east-1.amazonaws.com, api.mondlylanguages.com, api.busuu.com, owa.videoshowiosglobalserver.com:8095, accounts.elevateapp.net, purchases.ws.pho.to, api-intl.mr.meitu.com, bmall.camera360.com, api.tv.zing.vn, api.calm.com, www.calm.com, api.global.mp3.zing.vn, apimboom2.globaldelight.net, photos.adobe.io, license.pdfexpert.com, subs.platforms.team, apic.musixmatch.com, api.getmimo.com, api.revenuecat.com, engbright.com, api.lingokids.com, www.peacefulsoundsapp.com, duolingo-leaderboards-prod.duolingo.com,  commerce-i18n-api.faceu.mobi, mobile-api.adguard.com, api.blinkist.com, api.sololearn.com, api-kinemaster-assetstore.nexstreaming.com, subs.studycat.net, production.platform.originatorkids.com, pibo.jp, revoapi.moneylover.me, apis.littlefox.com, api.monkeyuni.net, api.prod.headspace.com, *.sleepcycle.com, api.ejoy.io, api.pushover.net, api.intsig.net, api.overhq.com, receipt-validator.herewetest.com, payments-p.yoursmartkid.com, education.github.com, backend.getdrafts.com, api.deezer.com, ssl-api.itranslateapp.com, sk.ulysses.app, dayone.me, api.leanplum.com, static.moneylover.me, api.farfaria.com, api.kidsup.net, api-production.endel.io,lcs-mobile-cops.adobe.io,p*-buy.itunes.apple.com, wolframalpha.com, *.wolfram.com,   api.shred.app, vocabinnews.com, *.deluxeweather.com, *.platforms.team, lumosity.com, *.crashlytics.com, license.enpass.io, mp.bybutter.com, *.grammarly.com, splice.oracle.*.com, api.keepkeep.com, planner5d.com, secure.istreamer.com, api.mazii.net, api.medium.com, api.revenuecat.com, api.thenx.com, vtpay9.viettel.vn, api.quizlet.com, api.spendee.com, ads.penreader.com, device-provisioning.googleapis.com, app.autocad360.com, oecd.oupchina.com.hk, qgytjlfnjfjf774fha7f.xiangxiangapps.com, api.lichviet.org, , account.wps.com, app.pluralsight.com, app.voiz.vn, subs.studycat.net,lapi.photomath.net, api.peakcloud.org,s.sleepcycle.com, api.sothuchi.vn,menscoach-api.asqq.io, comi.mobi, mochian-api.mochidemy.com, api.cercube.com, www.englishclass101.com,www.japanesepod101.com, www.frenchpod101.com,prod.api.shapr3d.com, api.taplytics.com,api.kidsupsoroban.vn, api.dungmori.com,bbdd2101-default-recorders-4916-415735771.us-west-2.elb.amazonaws.co,www.api.monkeyuni.net, api.alokiddy.com.vn,api.kynaforkids.vn, apis.littlefox.com,api.umbalena.vn, vocabinnews.com,api.abema.io,*.media.dssott.com, *.media.starott.com,*.api.hbo.com, *.hbomaxcdn.com,*.huluim.com,*.nflxvideo.net, *.cbsaavideo.com,*.cbsivideo.com, *.cloudfront.net,*.akamaihd.net,*.avi-cdn.net, *.youtube.com,app.monkeyuni.net, *.googleapis.com,*.googlevideo.com, youtubei.googleapis.com, api.account.kinemasters.com,notability.com, api.ankiapp.com,api-prod.rainichi.com
+enable = true
